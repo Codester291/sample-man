@@ -35,4 +35,29 @@ public class PatientService {
     public Object getPatients() {
         return patientRepository.findAll();
     }
+
+    // Update
+    public Object updatePatient(PatientDTO patientDTO, long id) {
+        // find our Patient
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+        // update that patient we find
+        patient.setFirstName(patientDTO.getFirstName());
+        patient.setLastName(patientDTO.getLastName());
+        patient.setMiddleName(patientDTO.getMiddleName());
+        patient.setAge(patientDTO.getAge());
+        patient.setGender(patientDTO.getGender());
+
+        return patientRepository.save(patient);
+    }
+
+    // Delete
+    public Object deletePatient(long id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+        patientRepository.delete(patient);
+        return "Patient has been deleted";
+    }
 }
