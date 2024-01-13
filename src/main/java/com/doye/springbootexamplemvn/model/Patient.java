@@ -1,4 +1,4 @@
-package com.doye.SpringBootExampleMvn.model;
+package com.doye.springbootexamplemvn.model;
 
 
 import jakarta.persistence.Entity;

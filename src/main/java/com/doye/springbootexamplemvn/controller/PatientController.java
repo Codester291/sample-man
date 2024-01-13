@@ -1,9 +1,11 @@
-package com.doye.SpringBootExampleMvn.controller;
+package com.doye.springbootexamplemvn.controller;
 
-import com.doye.SpringBootExampleMvn.dto.PatientDTO;
-import com.doye.SpringBootExampleMvn.service.PatientService;
-import org.springframework.http.MediaType;
+import com.doye.springbootexamplemvn.dto.PatientDTO;
+import com.doye.springbootexamplemvn.model.Patient;
+import com.doye.springbootexamplemvn.service.PatientService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,28 +23,26 @@ public class PatientController {
         return "Hello World";
     }
 
-    // CRUD Create Read Update Delete
-    //POST
     @PostMapping(value = "/patient/create")
-    public Object createPatient(@RequestBody PatientDTO patientDTO) {
+    public Patient createPatient(@RequestBody PatientDTO patientDTO) {
         return patientService.createPatient(patientDTO);
     }
 
     //GET
     @GetMapping("/patient")
-    public Object getPatients() {
+    public List<Patient> getPatients() {
         return patientService.getPatients();
     }
 
     //PUT
     @PutMapping("/patient/{id}")
-    public Object updatePatient(@RequestBody PatientDTO patientDTO, @PathVariable long id) {
+    public Patient updatePatient(@RequestBody PatientDTO patientDTO, @PathVariable long id) {
         return patientService.updatePatient(patientDTO, id);
     }
 
     //DELETE
     @DeleteMapping("/patient/{id}")
-    public Object deletePatient(@PathVariable long id) {
+    public String deletePatient(@PathVariable long id) {
         return patientService.deletePatient(id);
     }
 }

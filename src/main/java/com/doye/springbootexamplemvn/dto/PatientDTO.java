@@ -1,4 +1,4 @@
-package com.doye.SpringBootExampleMvn.dto;
+package com.doye.springbootexamplemvn.dto;
 
 public class PatientDTO {
 

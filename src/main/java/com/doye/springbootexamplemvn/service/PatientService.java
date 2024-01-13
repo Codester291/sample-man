@@ -1,10 +1,12 @@
-package com.doye.SpringBootExampleMvn.service;
+package com.doye.springbootexamplemvn.service;
 
 
-import com.doye.SpringBootExampleMvn.dto.PatientDTO;
-import com.doye.SpringBootExampleMvn.model.Patient;
-import com.doye.SpringBootExampleMvn.repository.PatientRepository;
+import com.doye.springbootexamplemvn.dto.PatientDTO;
+import com.doye.springbootexamplemvn.model.Patient;
+import com.doye.springbootexamplemvn.repository.PatientRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PatientService {
@@ -16,7 +18,7 @@ public class PatientService {
     }
 
     // Create
-    public Object createPatient(PatientDTO patientDTO) {
+    public Patient createPatient(PatientDTO patientDTO) {
         // create an instance of Patient
         Patient patient = new Patient();
 
@@ -28,16 +30,17 @@ public class PatientService {
         patient.setGender(patientDTO.getGender());
 
         // save the data
+        Patient save = patientRepository.save(patient);
         return patientRepository.save(patient);
     }
 
     // Read
-    public Object getPatients() {
+    public List<Patient> getPatients() {
         return patientRepository.findAll();
     }
 
     // Update
-    public Object updatePatient(PatientDTO patientDTO, long id) {
+    public Patient updatePatient(PatientDTO patientDTO, long id) {
         // find our Patient
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
@@ -53,7 +56,7 @@ public class PatientService {
     }
 
     // Delete
-    public Object deletePatient(long id) {
+    public String deletePatient(long id) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
