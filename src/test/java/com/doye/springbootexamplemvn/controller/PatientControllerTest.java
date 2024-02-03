@@ -52,7 +52,6 @@ class PatientControllerTest {
         gson = new Gson();
     }
 
-    // DRY -> Don't Repeat Yourself:>
     @Test
     void createPatient() throws Exception {
         when(patientService.createPatient(patientDTO)).thenReturn(new Patient());

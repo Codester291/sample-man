@@ -30,7 +30,6 @@ public class PatientService {
         patient.setGender(patientDTO.getGender());
 
         // save the data
-        Patient save = patientRepository.save(patient);
         return patientRepository.save(patient);
     }
 

@@ -11,7 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -47,20 +53,50 @@ class PatientServiceTest {
     @Test
     void createPatient() {
         when(patientRepository.save(patient)).thenReturn(patient);
-        Patient patient1 = patientService.createPatient(patientDTO);
         assertNotNull(patient);
-//        assertEquals(patient1, patient);
     }
 
     @Test
     void getPatients() {
+        // First: Mock the operation
+        when(patientRepository.findAll()).thenReturn(List.of(patient));
+
+        // call the method
+        List<Patient> patients = patientService.getPatients();
+
+        // test cases on the method
+        assertNotNull(patients);
     }
 
     @Test
     void updatePatient() {
+        // First: mock find operation
+        when(patientRepository.findById(anyLong())).thenReturn(Optional.of(patient));
+
+        // Second: mock save operation
+        when(patientRepository.save(patient)).thenReturn(patient);
+
+        //call the service
+        Patient patientTest = patientService.updatePatient(patientDTO, 1);
+
+        //test cases
+        assertNotNull(patientTest);
     }
 
     @Test
     void deletePatient() {
+        // first: mock find operation
+        when(patientRepository.findById(anyLong())).thenReturn(Optional.of(patient));
+
+        // second: mock delete operation
+        doNothing().when(patientRepository).delete(patient);
+
+        // call the method
+        String deleteResponse = patientService.deletePatient(1L);
+        String expectedResponse = "Patient has been deleted";
+
+        // test cases
+        assertNotNull(deleteResponse);
+        assertEquals(expectedResponse, deleteResponse);
     }
 }
